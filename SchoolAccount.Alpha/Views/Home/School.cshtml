@@ -1,0 +1,61 @@
+@model SchoolAccount.Alpha.ViewModels.SchoolViewModel
+@{
+    ViewData["Title"] = "School Details";
+}
+
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <h1 class="govuk-heading-xl">@Model.SchoolName</h1>
+
+        <p class="govuk-body">
+            Welcome <strong>@Model.UserName</strong>
+        </p>
+
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    School Type
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.SchoolType
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Phase of Education
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.PhaseOfEducation
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Number of Pupils
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.NumberOfPupils
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Percentage Eligible for Free School Meals (6 years)
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.PercentageEligibleForFsm
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Percentage Free School Meals
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model.PercentageFsm %
+                </dd>
+            </div>
+        </dl>
+
+        <p class="govuk-body">
+            <a asp-action="Organisations" class="govuk-link">Back to organisations</a>
+        </p>
+    </main>
+</div>
