@@ -23,7 +23,7 @@ namespace SchoolAccount.Alpha.Services
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new ApiException(response.StatusCode + " Could not read organisations", response.StatusCode);
+                throw new ApiException($"{response.StatusCode}: Could not read organisations", response.StatusCode);
             }
 
             return await response.Content.ReadFromJsonAsync<AcademyOrganisation>() ?? null;
@@ -40,7 +40,7 @@ namespace SchoolAccount.Alpha.Services
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new ApiException(response.StatusCode + " Could not read organisations", response.StatusCode);
+                throw new ApiException($"{response.StatusCode}: Could not read organisations", response.StatusCode);
             }
 
             return await response.Content.ReadFromJsonAsync<AcademyTrust>() ?? null;

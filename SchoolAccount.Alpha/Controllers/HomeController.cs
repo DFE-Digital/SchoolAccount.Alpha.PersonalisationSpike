@@ -25,7 +25,6 @@ namespace SchoolAccount.Alpha.Controllers
         [Authorize]
         public async Task<IActionResult> Organisations()
         {
-
             var user = UserService.GetUser(User.Claims);
             var allOrgs = await apiService.GetUserOrganisations(user.DsiId);
             // remove orgs that aren't school account related
@@ -44,7 +43,6 @@ namespace SchoolAccount.Alpha.Controllers
             var user = UserService.GetUser(User.Claims);
 
             var academyDetails = await acService.GetOrganisationDetails(ukprn);
-
             if (academyDetails == null)
             {
                 return NotFound($"School with UKPRN {ukprn} not found");
@@ -73,7 +71,6 @@ namespace SchoolAccount.Alpha.Controllers
             }
 
             var trust = await acService.GetTrustDetails(ukprn);
-
             if (trust == null)
             {
                 return NotFound($"Group with UKPRN {ukprn} not found");
