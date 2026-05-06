@@ -43,6 +43,10 @@ The project requires the following app configuration values to be overridden, id
 
 Suitable values may be taken from an existing project, i.e. DfE Connect, for investigative purposes.
 
+## Shared Components
+
+The projct utilises the [govuk-frontend-aspnetcore](https://github.com/x-govuk/govuk-frontend-aspnetcore) package, rebranded to DfE using the guidlines at [https://design.education.gov.uk/design-system/govuk-rebrand](https://design.education.gov.uk/design-system/govuk-rebrand).
+
 
 ## DSI Authentication
 
