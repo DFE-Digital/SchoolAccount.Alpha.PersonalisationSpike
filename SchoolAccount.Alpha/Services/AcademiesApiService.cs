@@ -6,7 +6,6 @@ namespace SchoolAccount.Alpha.Services
     public interface IAcademiesApiService
     {
         Task<AcademyOrganisation?> GetOrganisationDetails(string ukPrn);
-        Task<List<AcademyEstablishment>> GetTrustEstablishments(string ukPrn);
         Task<AcademyTrust?> GetTrustDetails(string ukPrn);
     }
 
@@ -45,24 +44,6 @@ namespace SchoolAccount.Alpha.Services
             }
 
             return await response.Content.ReadFromJsonAsync<AcademyTrust>() ?? null;
-        }
-
-        public async Task<List<AcademyEstablishment>> GetTrustEstablishments(string ukPrn)
-        {
-
-            var response = await httpClient.GetAsync($"v4/establishments/trust?trustUkprn={ukPrn}");
-
-            if (response.StatusCode == HttpStatusCode.NotFound)
-            {
-                return new List<AcademyEstablishment>();
-            }
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new ApiException(response.StatusCode + " Could not read trust's organisations", response.StatusCode);
-            }
-
-            return await response.Content.ReadFromJsonAsync<List<AcademyEstablishment>>() ?? new List<AcademyEstablishment>();
         }
     }
 }

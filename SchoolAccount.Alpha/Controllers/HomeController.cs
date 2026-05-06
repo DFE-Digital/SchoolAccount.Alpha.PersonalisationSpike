@@ -72,7 +72,6 @@ namespace SchoolAccount.Alpha.Controllers
                 return BadRequest("UKPRN is required");
             }
 
-            var user = UserService.GetUser(User.Claims);
             var trust = await acService.GetTrustDetails(ukprn);
 
             if (trust == null)

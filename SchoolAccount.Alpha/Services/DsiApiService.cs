@@ -14,17 +14,9 @@ namespace SchoolAccount.Alpha.Services
         Task<List<DsiOrganisation>> GetUserOrganisations(string userId);
     }
 
-    public class DsiApiService : IDsiApiService
+    public class DsiApiService(HttpClient httpClient, IOptions<DsiApiConfig> options) : IDsiApiService
     {
-
-        private readonly HttpClient _httpClient;
-        private readonly DsiApiConfig _apiConfig;
-
-        public DsiApiService(HttpClient httpClient, IOptions<DsiApiConfig> options)
-        {
-            _httpClient = httpClient;
-            _apiConfig = options.Value;
-        }
+        private readonly DsiApiConfig _apiConfig = options.Value;
 
         private string CreateBearerToken()
         {
@@ -43,10 +35,10 @@ namespace SchoolAccount.Alpha.Services
 
         public async Task<List<DsiOrganisation>> GetUserOrganisations(string userId)
         {
-            _httpClient.DefaultRequestHeaders.Authorization =
+            httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", CreateBearerToken());
 
-            var response = await _httpClient.GetAsync($"users/{userId}/v2/organisations");
+            var response = await httpClient.GetAsync($"users/{userId}/v2/organisations");
 
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
