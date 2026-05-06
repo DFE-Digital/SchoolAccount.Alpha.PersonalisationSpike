@@ -17,8 +17,6 @@ namespace SchoolAccount.Alpha.Controllers
         {
             if (User.Identity?.IsAuthenticated == true)
             {
-
-
                 return RedirectToAction("Organisations");
             }
             return View("Login");
@@ -29,18 +27,10 @@ namespace SchoolAccount.Alpha.Controllers
         {
 
             var user = UserService.GetUser(User.Claims);
-            var organisations = await apiService.GetUserOrganisations(user.DsiId);
-            foreach (var dsiOrganisation in organisations)
-            {
-                var orgDetails = await acService.GetOrganisationDetails(dsiOrganisation.Ukprn);
-                if (orgDetails != null)
-                {
-                    dsiOrganisation.PercentageFsm = orgDetails?.Census?.PercentageFsm ?? string.Empty;
-                }
-            }
-
-            return View(new UserViewModel { Name = user.GivenName, LastName = user.LastName, Organisations = organisations });
-
+            var allOrgs = await apiService.GetUserOrganisations(user.DsiId);
+            // remove orgs that aren't school account related
+            var filteredOrgs = allOrgs.Where(o => !string.IsNullOrEmpty(o.Ukprn)).ToList();
+            return View(new UserViewModel { Name = user.GivenName, LastName = user.LastName, Organisations = filteredOrgs });
         }
 
         [Authorize]
@@ -72,6 +62,25 @@ namespace SchoolAccount.Alpha.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Group(string ukprn)
+        {
+            if (string.IsNullOrEmpty(ukprn))
+            {
+                return BadRequest("UKPRN is required");
+            }
+
+            var user = UserService.GetUser(User.Claims);
+            var trust = await acService.GetTrustDetails(ukprn);
+
+            if (trust == null)
+            {
+                return NotFound($"Group with UKPRN {ukprn} not found");
+            }
+
+            return View(new GroupViewModel { TrustName = trust.GiasData?.GroupName ?? "Unknown", TrustUkPrn = trust.GiasData?.Ukprn ?? "Unknown", Establishments = trust.Establishments });
         }
 
         public IActionResult Login(string? returnUrl = null)

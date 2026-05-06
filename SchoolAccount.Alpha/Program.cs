@@ -1,6 +1,7 @@
 using GovUk.Frontend.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using SchoolAccount.Alpha.Services;
 using SchoolAccount.Alpha.Services.Config;
@@ -44,8 +45,18 @@ builder.Services.AddOptions<AcademiesApiConfig>()
     .ValidateDataAnnotations()
     .ValidateOnStart();
 
-builder.Services.AddScoped<IDsiApiService, DsiApiService>();
-builder.Services.AddScoped<IAcademiesApiService, AcademiesApiService>();
+builder.Services.AddHttpClient<IDsiApiService, DsiApiService>((serviceProvider, client) =>
+{
+    var config = serviceProvider.GetRequiredService<IOptions<DsiApiConfig>>().Value;
+    client.BaseAddress = new Uri(config.PublicUrl);
+});
+
+builder.Services.AddHttpClient<IAcademiesApiService, AcademiesApiService>((serviceProvider, client) =>
+{
+    var config = serviceProvider.GetRequiredService<IOptions<AcademiesApiConfig>>().Value;
+    client.BaseAddress = new Uri(config.PublicUrl);
+    client.DefaultRequestHeaders.Add("ApiKey", config.ApiKey);
+});
 
 var app = builder.Build();
 app.UseGovUkFrontend();

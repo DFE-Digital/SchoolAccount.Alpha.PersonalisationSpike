@@ -4,6 +4,7 @@ using SchoolAccount.Alpha.Services.Config;
 using SchoolAccount.Alpha.Services.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace SchoolAccount.Alpha.Services
@@ -19,17 +20,13 @@ namespace SchoolAccount.Alpha.Services
         private readonly HttpClient _httpClient;
         private readonly DsiApiConfig _apiConfig;
 
-        public DsiApiService(IOptionsSnapshot<DsiApiConfig> options)
+        public DsiApiService(HttpClient httpClient, IOptions<DsiApiConfig> options)
         {
+            _httpClient = httpClient;
             _apiConfig = options.Value;
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(_apiConfig.PublicUrl),
-                DefaultRequestHeaders = { {"Authorization", $"Bearer {this.CreateBearerToken()}" } }
-            };
         }
 
-        public string CreateBearerToken()
+        private string CreateBearerToken()
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_apiConfig.ApiSecret);
@@ -46,6 +43,8 @@ namespace SchoolAccount.Alpha.Services
 
         public async Task<List<DsiOrganisation>> GetUserOrganisations(string userId)
         {
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", CreateBearerToken());
 
             var response = await _httpClient.GetAsync($"users/{userId}/v2/organisations");
 

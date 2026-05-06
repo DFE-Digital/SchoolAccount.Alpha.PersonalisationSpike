@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Sample Alpha Page";
+}
+@model SchoolAccount.Alpha.ViewModels.GroupViewModel
+
+
+<h2 class="govuk-heading-m">Select an establishment in @Model.TrustName (@Model.TrustUkPrn)</h2>
+<ul class="govuk-list">
+    @foreach (var org in Model.Establishments)
+    {
+        <li>
+            <a class="govuk-link" asp-action="School" asp-route-ukprn="@org.Ukprn">
+                <strong>@org.EstablishmentName</strong>
+                @if (!string.IsNullOrEmpty(org.Ukprn))
+                {
+                    <text> (UKPRN: @org.Ukprn)</text>
+                }
+            </a>
+        </li>
+    }
+</ul>
