@@ -17,6 +17,8 @@ An application registration can be initiated via a 'Service Now' request.
 
 Ensure the project's redirect and logout redirect URLs are added to the DSI application's service configuration.
 
+**Note:** the DSI redirect URLs do not allow `http` or `localhost`, so the project is configured to run on `https://127.0.0.1`.
+
 An Academies API key is also required. Instructions on requesting a key can be found on the service details page at [Find and Use an API](https://beta-find-and-use-an-api.education.gov.uk/api/academies-api-1).
 
 ## Configuration
