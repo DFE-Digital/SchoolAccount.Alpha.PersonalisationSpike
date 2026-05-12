@@ -6,13 +6,12 @@ public class GovUkSearchResultItem
 {
     [JsonPropertyName("title")]
     public string Title { get; set; } = string.Empty;
-
     [JsonPropertyName("description")]
     public string Description { get; set; } = string.Empty;
     [JsonPropertyName("format")]
     public string Format { get; set; } = string.Empty;
-    [JsonPropertyName("public_updated_at")]
-    public string UpdatedAt { get; set; } = string.Empty;
+    [JsonPropertyName("public_timestamp")]
+    public DateTime? UpdatedAt { get; set; }
     [JsonPropertyName("link")]
     public string Link { get; set; } = string.Empty;
     [JsonPropertyName("taxons")]

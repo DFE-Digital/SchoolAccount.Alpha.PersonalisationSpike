@@ -18,7 +18,7 @@ namespace SchoolAccount.Alpha.Services
                 ["start"] = ((pageNo - 1) * pageSize).ToString(),
                 ["order"] = "-public_timestamp",
                 ["filter_organisations"] = "department-for-education",
-                ["fields"] = "title,link,public_timestamp,format,taxons,part_of_taxonomy_tree",
+                ["fields"] = "title,description,link,public_timestamp,format,taxons,part_of_taxonomy_tree",
                 ["count"] = pageSize.ToString()
             };
 
