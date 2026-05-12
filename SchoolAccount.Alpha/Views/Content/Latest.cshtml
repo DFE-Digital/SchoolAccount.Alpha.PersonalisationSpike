@@ -3,7 +3,7 @@
 }
 @model SchoolAccount.Alpha.ViewModels.ContentViewModel
 
-<h2 class="govuk-heading-m">Latest content from DfE (page @Model.CurrentPage of @Model.TotalPages)</h2>
+<h2 class="govuk-heading-m">@Model.PageTitle (page @Model.CurrentPage of @Model.TotalPages)</h2>
 <ul class="govuk-task-list">
     @foreach (var result in Model.Results)
     {

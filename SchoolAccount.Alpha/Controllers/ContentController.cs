@@ -7,17 +7,35 @@ namespace SchoolAccount.Alpha.Controllers
     public class ContentController(IGovUkSearchService govUkSearchService) : Controller
     {
 
-        public async Task<IActionResult> Latest(int pageNo = 1)
+        const int DefaultPageSize = 12;
+        public async Task<IActionResult> Latest(int pageNo)
         {
-            const int PageSize = 12;
-            var results = await govUkSearchService.GetLatestDfeDocs(PageSize, pageNo);
+            pageNo = Math.Max(1, pageNo);
+            var results = await govUkSearchService.GetLatestDfeDocs(DefaultPageSize, pageNo);
+
             var model = new ContentViewModel()
             {
-                                CurrentPage = pageNo,
-                                TotalPages = (int)Math.Ceiling((decimal)results.Total / PageSize),
-                                Results = results.Results
+                PageTitle = "Latest DfE publications, newest to oldest",
+                CurrentPage = pageNo,
+                TotalPages = results == null ? 0 : (int)Math.Ceiling((decimal)results.Total / DefaultPageSize),
+                Results = results?.Results ?? []
             };
-            return  View(model);
+            return View(model);
+        }
+
+        public async Task<IActionResult> Search(int pageNo, string query)
+        {
+            pageNo = Math.Max(1, pageNo);
+            var results = await govUkSearchService.SearchDfeDocs(DefaultPageSize, pageNo, query);
+
+            var model = new ContentViewModel()
+            {
+                PageTitle = $"Documents matching '{query}', ordered by relevance",
+                CurrentPage = pageNo,
+                TotalPages = results == null ? 0 : (int)Math.Ceiling((decimal)results.Total / DefaultPageSize),
+                Results = results?.Results ?? []
+            };
+            return View("Latest", model);
         }
     }
 }
