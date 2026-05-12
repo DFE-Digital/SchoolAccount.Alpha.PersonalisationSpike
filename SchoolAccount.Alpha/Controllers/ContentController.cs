@@ -16,6 +16,7 @@ namespace SchoolAccount.Alpha.Controllers
             var model = new ContentViewModel()
             {
                 PageTitle = "Latest DfE publications, newest to oldest",
+                Action = "Latest",
                 CurrentPage = pageNo,
                 TotalPages = results == null ? 0 : (int)Math.Ceiling((decimal)results.Total / DefaultPageSize),
                 Results = results?.Results ?? []
@@ -40,6 +41,8 @@ namespace SchoolAccount.Alpha.Controllers
             var model = new ContentViewModel()
             {
                 PageTitle = $"Documents matching '{query}', ordered by relevance",
+                Action = "SearchResults",
+                Query = query,
                 CurrentPage = pageNo,
                 TotalPages = results == null ? 0 : (int)Math.Ceiling((decimal)results.Total / DefaultPageSize),
                 Results = results?.Results ?? []

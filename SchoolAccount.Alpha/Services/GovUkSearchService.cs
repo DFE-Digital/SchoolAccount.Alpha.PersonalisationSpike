@@ -18,7 +18,10 @@ namespace SchoolAccount.Alpha.Services
                 "public_timestamp",
                 "format",
                 "taxons",
-                "part_of_taxonomy_tree"
+                "part_of_taxonomy_tree",
+                "start_date",
+                "end_date",
+                //"indexable_content"
             ];
 
         public async Task<GovUkSearchResults?> GetLatestDfeDocs(int pageSize, int pageNo)
@@ -37,6 +40,7 @@ namespace SchoolAccount.Alpha.Services
             {
                 ["start"] = ((pageNo - 1) * pageSize).ToString(),
                 ["filter_organisations"] = "department-for-education",
+                //["filter_format"] = "guidance",
                 ["fields"] = String.Join(',', StandardFields),
                 ["count"] = pageSize.ToString()
             };

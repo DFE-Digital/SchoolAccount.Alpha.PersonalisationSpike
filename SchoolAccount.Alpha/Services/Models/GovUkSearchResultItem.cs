@@ -11,7 +11,14 @@ public class GovUkSearchResultItem
     [JsonPropertyName("format")]
     public string Format { get; set; } = string.Empty;
     [JsonPropertyName("public_timestamp")]
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; } 
+    [JsonPropertyName("start_date")]
+    public DateTime? StartDate { get; set; }  
+    [JsonPropertyName("end_date")]
+    public DateTime? EndDate { get; set; }
+
+    [JsonPropertyName("indexable_content")]
+    public string IndexableContent { get; set; } = string.Empty;
     [JsonPropertyName("link")]
     public string Link { get; set; } = string.Empty;
     [JsonPropertyName("taxons")]
