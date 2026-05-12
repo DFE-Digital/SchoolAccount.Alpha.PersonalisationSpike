@@ -20,10 +20,19 @@ namespace SchoolAccount.Alpha.Controllers
                 TotalPages = results == null ? 0 : (int)Math.Ceiling((decimal)results.Total / DefaultPageSize),
                 Results = results?.Results ?? []
             };
+            return View("Results", model);
+        }
+
+        public IActionResult Search()
+        {
+            var model = new ContentViewModel()
+            {
+                PageTitle = "Search DfE publications"
+            };
             return View(model);
         }
 
-        public async Task<IActionResult> Search(int pageNo, string query)
+        public async Task<IActionResult> SearchResults(int pageNo, string query)
         {
             pageNo = Math.Max(1, pageNo);
             var results = await govUkSearchService.SearchDfeDocs(DefaultPageSize, pageNo, query);
@@ -35,7 +44,7 @@ namespace SchoolAccount.Alpha.Controllers
                 TotalPages = results == null ? 0 : (int)Math.Ceiling((decimal)results.Total / DefaultPageSize),
                 Results = results?.Results ?? []
             };
-            return View("Latest", model);
+            return View("Results", model);
         }
     }
 }
