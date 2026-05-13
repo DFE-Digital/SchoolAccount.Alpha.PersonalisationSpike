@@ -120,4 +120,4 @@ To reduce the amount of content returned search results are restricted to only g
 
 Search results are order by [relevance](https://docs.publishing.service.gov.uk/repos/search-api/relevancy.html#contents), while latest guidance is in descending order of last update. 
 
-Note: there are two timestamps available, `update_date` and `public_datestamp`. `update_date` is the time of the last indexing which may be significantly newer than `public_timestamp`, as that usually only reflects major updates and not minor ones. Update date was selected for the prototype to capture all changes to content.
+Note: there are two timestamps available, `update_date` and `public_timestamp`. `update_date` is the time of the last indexing which may be significantly newer than `public_timestamp`, as that usually only reflects major updates and not minor ones. Update date was selected for the prototype to capture all changes to content.
