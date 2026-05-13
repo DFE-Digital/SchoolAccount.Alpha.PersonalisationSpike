@@ -10,7 +10,7 @@ public class GovUkSearchResultItem
     public string Description { get; set; } = string.Empty;
     [JsonPropertyName("format")]
     public string Format { get; set; } = string.Empty;
-    [JsonPropertyName("public_timestamp")]
+    [JsonPropertyName("updated_at")]
     public DateTime? UpdatedAt { get; set; } 
     [JsonPropertyName("start_date")]
     public DateTime? StartDate { get; set; }  

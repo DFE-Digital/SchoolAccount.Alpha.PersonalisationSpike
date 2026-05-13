@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SchoolAccount.Alpha.Services;
 using SchoolAccount.Alpha.ViewModels;
 
 namespace SchoolAccount.Alpha.Controllers
 {
+
+    [Authorize]
     public class ContentController(IGovUkSearchService govUkSearchService) : Controller
     {
 

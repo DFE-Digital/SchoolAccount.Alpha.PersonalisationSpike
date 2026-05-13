@@ -15,7 +15,7 @@ namespace SchoolAccount.Alpha.Services
             ["title",
                 "description",
                 "link",
-                "public_timestamp",
+                "updated_at",
                 "format",
                 "taxons",
                 "part_of_taxonomy_tree",

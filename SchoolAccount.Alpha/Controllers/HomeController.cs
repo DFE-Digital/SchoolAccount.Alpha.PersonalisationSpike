@@ -9,10 +9,12 @@ using SchoolAccount.Alpha.ViewModels;
 
 namespace SchoolAccount.Alpha.Controllers
 {
+    [Authorize]
     public class HomeController(ILogger<HomeController> logger, IDsiApiService apiService, IAcademiesApiService acService) : Controller
     {
         private readonly ILogger<HomeController> _logger = logger;
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             if (User.Identity?.IsAuthenticated == true)
@@ -22,7 +24,6 @@ namespace SchoolAccount.Alpha.Controllers
             return View("Login");
         }
 
-        [Authorize]
         public async Task<IActionResult> Organisations()
         {
             var user = UserService.GetUser(User.Claims);
@@ -32,7 +33,6 @@ namespace SchoolAccount.Alpha.Controllers
             return View(new UserViewModel { Name = user.GivenName, LastName = user.LastName, Organisations = filteredOrgs });
         }
 
-        [Authorize]
         public async Task<IActionResult> School(string ukprn)
         {
             if (string.IsNullOrEmpty(ukprn))
@@ -79,6 +79,7 @@ namespace SchoolAccount.Alpha.Controllers
             return View(new GroupViewModel { TrustName = trust.GiasData?.GroupName ?? "Unknown", TrustUkPrn = trust.GiasData?.Ukprn ?? "Unknown", Establishments = trust.Establishments });
         }
 
+        [AllowAnonymous]
         public IActionResult Login(string? returnUrl = null)
         {
             // If already authenticated, redirect to return URL or home
@@ -93,7 +94,8 @@ namespace SchoolAccount.Alpha.Controllers
                 new AuthenticationProperties { RedirectUri = returnUrl },
                 OpenIdConnectDefaults.AuthenticationScheme);
         }
-
+        
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
