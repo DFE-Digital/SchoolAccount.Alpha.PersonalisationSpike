@@ -35,6 +35,7 @@ builder.Services.AddGovUkFrontend();
 builder.Services.AddControllersWithViews();
 
 // register app services
+builder.Services.AddSingleton<ITaxonService, TaxonService>();
 builder.Services.AddOptions<DsiApiConfig>()
     .Bind(builder.Configuration.GetSection("DfeSignInApi"))
     .ValidateDataAnnotations()
@@ -42,6 +43,11 @@ builder.Services.AddOptions<DsiApiConfig>()
 
 builder.Services.AddOptions<AcademiesApiConfig>()
     .Bind(builder.Configuration.GetSection("AcademiesApi"))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddOptions<GovUkSearchApiConfig>()
+    .Bind(builder.Configuration.GetSection("GovUkSearchApi"))
     .ValidateDataAnnotations()
     .ValidateOnStart();
 
@@ -56,6 +62,11 @@ builder.Services.AddHttpClient<IAcademiesApiService, AcademiesApiService>((servi
     var config = serviceProvider.GetRequiredService<IOptions<AcademiesApiConfig>>().Value;
     client.BaseAddress = new Uri(config.PublicUrl);
     client.DefaultRequestHeaders.Add("ApiKey", config.ApiKey);
+});
+builder.Services.AddHttpClient<IGovUkSearchService, GovUkSearchService>((serviceProvider, client) =>
+{
+    var config = serviceProvider.GetRequiredService<IOptions<GovUkSearchApiConfig>>().Value;
+    client.BaseAddress = new Uri(config.PublicUrl);
 });
 
 var app = builder.Build();

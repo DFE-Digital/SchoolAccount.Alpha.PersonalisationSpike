@@ -1,7 +1,7 @@
 # SchoolAccount.Alpha 
 ## Overview
 
-The project demonstrates 'Single Sign-On' using DfE Sign-In (DSI) Authentication, and retrieval of data from the DSI and Academies APIs.
+The project demonstrates 'Single Sign-On' using DfE Sign-In (DSI) Authentication, retrieval of data from the DSI, Academies and Search APIs.
 
 The service allows a user to:
 - sign in with DSI
@@ -9,6 +9,8 @@ The service allows a user to:
 - view details about an establishment, including school size, phase of education, and free school meals information
 - view the establishments in their trusts
 - view details about an establishment in their trust
+- view the latest DfE documents published on gov.uk
+- search DfE documents published on gov.uk 
 
 ## Requirements
 
@@ -85,3 +87,37 @@ Although named 'the Academies API', the Academies API contains data about all ed
 The Academies API is used for two purposes:
 - to retrieve in depth details about an establishment
 - to retrieve the establishments in a trusts
+
+## Search API
+
+The search API documentation can be found at [https://docs.publishing.service.gov.uk/repos/search-api](https://docs.publishing.service.gov.uk/repos/search-api/using-the-search-api.html).
+
+There are hundreds of fields that can be retrieved from the search API, but not all are used across all documents. The full list can be found in the Search API's [field_definitions.json](https://github.com/alphagov/search-api/blob/main/config/schema/field_definitions.json).
+
+The query in this project uses the following fields:
+- title
+- description
+- link
+- updated_at
+- format
+- taxons
+- part_of_taxonomy_tree
+- start_date
+- end_date
+               
+It is also possible to retrieve the raw content that was added to the query store via the `indexable_content` field. 
+While not very readable due to the lack of whitespace, this could potentially be useful as the source for an AI summary.
+
+Taxons are returned as a list of IDs in the search API, rather than the human readable name. Some effort is required to get details for the ID. 
+
+Taxons themselves are content. Level one taxon details can be retrieved from [https://www.gov.uk/api/content](https://www.gov.uk/api/content). 
+
+The [documentation](https://docs.publishing.service.gov.uk/manual/taxonomy.html#accessing-the-taxonomy) suggests building the structure of the taxonomy tree by following the `child_taxons` links for each top level taxon, and each child link thereof. 
+
+This approach was not undertaken for the spike, a suitable (though possibly out of date) CSV file was obtained from [GitHub user Oscar Wyatt's repository](https://github.com/oscarwyatt/print-the-whole-damn-taxonomy/blob/master/tree.csv) to [build a dictionary](SchoolAccount.Alpha/Services/TaxonService.cs) of taxon ID to name.
+
+To reduce the amount of content returned search results are restricted to only guidance and detailed guides. published by the DfE.
+
+Search results are order by [relevance](https://docs.publishing.service.gov.uk/repos/search-api/relevancy.html#contents), while latest guidance is in descending order of last update. 
+
+Note: there are two timestamps available, `update_date` and `public_datestamp`. `update_date` is the time of the last indexing which may be significantly newer than `public_timestamp`, as that usually only reflects major updates and not minor ones. Update date was selected for the prototype to capture all changes to content.
