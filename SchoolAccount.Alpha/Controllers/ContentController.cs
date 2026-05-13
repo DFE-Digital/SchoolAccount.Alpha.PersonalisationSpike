@@ -15,7 +15,7 @@ namespace SchoolAccount.Alpha.Controllers
 
             var model = new ContentViewModel()
             {
-                PageTitle = "Latest DfE publications, newest to oldest",
+                PageTitle = "Recently updated DfE guidance, newest to oldest",
                 Action = "Latest",
                 CurrentPage = pageNo,
                 TotalPages = results == null ? 0 : (int)Math.Ceiling((decimal)results.Total / DefaultPageSize),
@@ -28,7 +28,7 @@ namespace SchoolAccount.Alpha.Controllers
         {
             var model = new ContentViewModel()
             {
-                PageTitle = "Search DfE publications"
+                PageTitle = "Search DfE guidance"
             };
             return View(model);
         }
@@ -40,7 +40,7 @@ namespace SchoolAccount.Alpha.Controllers
 
             var model = new ContentViewModel()
             {
-                PageTitle = $"Documents matching '{query}', ordered by relevance",
+                PageTitle = $"Guidance matching '{query}', ordered by relevance",
                 Action = "SearchResults",
                 Query = query,
                 CurrentPage = pageNo,

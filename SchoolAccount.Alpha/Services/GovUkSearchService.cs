@@ -35,25 +35,26 @@ namespace SchoolAccount.Alpha.Services
 
         private string BuildQueryParams(int pageSize, int pageNo, string? query = null)
         {
-
-            var queryParams = new Dictionary<string, string>
+            var queryParams = new List<KeyValuePair<string, string>>
             {
-                ["start"] = ((pageNo - 1) * pageSize).ToString(),
-                ["filter_organisations"] = "department-for-education",
-                //["filter_format"] = "guidance",
-                ["fields"] = String.Join(',', StandardFields),
-                ["count"] = pageSize.ToString()
+                new("start", ((pageNo - 1) * pageSize).ToString()),
+                new("filter_organisations", "department-for-education"),
+                new("filter_any_format", "detailed_guide"),
+                new("filter_any_format", "guidance"),
+                new("fields", string.Join(',', StandardFields)),
+                new("count", pageSize.ToString())
             };
+
             if (string.IsNullOrEmpty(query))
             {
-                queryParams["order"] = "-public_timestamp";
+                queryParams.Add(new("order", "-public_timestamp"));
             }
             else
             {
-                queryParams["q"] = query;
+                queryParams.Add(new("q", query));
             }
 
-            return QueryHelpers.AddQueryString(String.Empty, queryParams!);
+            return QueryHelpers.AddQueryString(string.Empty, queryParams!);
         }
 
         public async Task<GovUkSearchResults?> SearchDfeDocs(int pageSize, int pageNo, string query)
