@@ -116,9 +116,9 @@ The [documentation](https://docs.publishing.service.gov.uk/manual/taxonomy.html#
 
 This approach was not undertaken for the spike, a suitable (though possibly out of date) CSV file was obtained from [GitHub user Oscar Wyatt's repository](https://github.com/oscarwyatt/print-the-whole-damn-taxonomy/blob/master/tree.csv) to [build a dictionary](SchoolAccount.Alpha/Services/TaxonService.cs) of taxon ID to name.
 
-To reduce the amount of content returned search results are restricted to only guidance and detailed guides. published by the DfE.
+To reduce the amount of content returned search results are restricted to only guidance and detailed guides published by the DfE.
 
-Search results are order by [relevance](https://docs.publishing.service.gov.uk/repos/search-api/relevancy.html#contents), while latest guidance is in descending order of last update. 
+Search results are ordered by [relevance](https://docs.publishing.service.gov.uk/repos/search-api/relevancy.html#contents), while latest guidance is in descending order of last update. 
 
 Note: there are two timestamps available, `update_date` and `public_timestamp`. `update_date` is the time of the last indexing which may be significantly newer than `public_timestamp`, as that usually only reflects major updates and not minor ones.
 
