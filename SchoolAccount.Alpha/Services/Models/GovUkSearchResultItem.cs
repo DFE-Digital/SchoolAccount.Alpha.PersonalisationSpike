@@ -16,7 +16,6 @@ public class GovUkSearchResultItem
     public DateTime? StartDate { get; set; }  
     [JsonPropertyName("end_date")]
     public DateTime? EndDate { get; set; }
-
     [JsonPropertyName("indexable_content")]
     public string IndexableContent { get; set; } = string.Empty;
     [JsonPropertyName("link")]
