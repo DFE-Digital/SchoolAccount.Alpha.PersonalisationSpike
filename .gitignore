@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 .github
 .idea
+appsettings.Production.json

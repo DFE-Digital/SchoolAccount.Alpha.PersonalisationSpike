@@ -47,7 +47,9 @@ namespace SchoolAccount.Alpha.Services
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new ApiException($"{response.StatusCode}: Could not read organisations", response.StatusCode);
+                string message = response.StatusCode == HttpStatusCode.Forbidden ? "Access denied to DSI API, is the client secret correct?" : String.Empty;
+
+                throw new ApiException($"{response.StatusCode}: Could not read organisations. {message}", response.StatusCode);
             }
 
             return await response.Content.ReadFromJsonAsync<List<DsiOrganisation>>() ?? new List<DsiOrganisation>();
