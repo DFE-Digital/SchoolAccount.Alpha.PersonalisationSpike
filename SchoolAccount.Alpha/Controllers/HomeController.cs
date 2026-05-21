@@ -47,7 +47,7 @@ namespace SchoolAccount.Alpha.Controllers
                 return NotFound($"School with UKPRN {ukprn} not found");
             }
 
-            var censusSummary = await collectApiService.GetSubmissionSummary("SchoolCensus 2025_Spring", schoolDetails.Laestab);
+            var censusSummary = await collectApiService.GetSubmissionSummary(CollectApiService.DefaultCollection, schoolDetails.Laestab);
 
             return View(new SchoolViewModel(user, schoolDetails, censusSummary));
         }
@@ -70,7 +70,7 @@ namespace SchoolAccount.Alpha.Controllers
             var trustLaestabs = trust.Establishments.Select(e => e.Laestab).ToList();
             if (trustLaestabs.Any())
             {
-                var censusDetails = await collectApiService.GetSubmissionSummaries("SchoolCensus 2025_Spring", trustLaestabs);
+                var censusDetails = await collectApiService.GetSubmissionSummaries(CollectApiService.DefaultCollection, trustLaestabs);
 
                 if (censusDetails.Any())
                 {

@@ -6,6 +6,14 @@
 
 <h2 class="govuk-heading-m">Census submissions for establishments in @Model.TrustName</h2>
 
+<p class="govuk-body">
+    Census '@Model.CollectionName' opened on @Model.CollectionOpenDate.Value.ToString("dd/MM/yyyy")
+    <br/>
+    Returns are due by @Model.CollectionDueDate.Value.ToString("dd/MM/yyyy")
+</p>
+
+
+
 <table class="govuk-table govuk-table--small-text-until-tablet">
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">

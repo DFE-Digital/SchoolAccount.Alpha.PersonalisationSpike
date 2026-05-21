@@ -27,10 +27,11 @@ namespace SchoolAccount.Alpha.Controllers
             {
                 return NotFound($"Trust with UKPRN {ukprn} has no establishments");
             }
+            var collectionDetails = await collectApiService.GetCollectionDetails(CollectApiService.DefaultCollection);
 
-            var censusDetails = await collectApiService.GetSubmissionSummaries("SchoolCensus 2025_Spring", trustLaestabs);
+            var censusDetails = await collectApiService.GetSubmissionSummaries(CollectApiService.DefaultCollection, trustLaestabs);
 
-            return View(new CensusTrustViewModel(trust, censusDetails));
+            return View("TrustV2", new CensusTrustViewModel(trust, censusDetails, collectionDetails));
         }
     }
 }
