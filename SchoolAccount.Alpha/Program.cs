@@ -51,6 +51,11 @@ builder.Services.AddOptions<GovUkSearchApiConfig>()
     .ValidateDataAnnotations()
     .ValidateOnStart();
 
+builder.Services.AddOptions<CollectApiConfig>()
+    .Bind(builder.Configuration.GetSection("CollectApi"))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
 builder.Services.AddHttpClient<IDsiApiService, DsiApiService>((serviceProvider, client) =>
 {
     var config = serviceProvider.GetRequiredService<IOptions<DsiApiConfig>>().Value;
@@ -66,6 +71,11 @@ builder.Services.AddHttpClient<IAcademiesApiService, AcademiesApiService>((servi
 builder.Services.AddHttpClient<IGovUkSearchService, GovUkSearchService>((serviceProvider, client) =>
 {
     var config = serviceProvider.GetRequiredService<IOptions<GovUkSearchApiConfig>>().Value;
+    client.BaseAddress = new Uri(config.PublicUrl);
+});
+builder.Services.AddHttpClient<ICollectApiService, CollectApiService>((serviceProvider, client) =>
+{
+    var config = serviceProvider.GetRequiredService<IOptions<CollectApiConfig>>().Value;
     client.BaseAddress = new Uri(config.PublicUrl);
 });
 

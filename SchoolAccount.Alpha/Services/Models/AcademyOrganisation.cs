@@ -1,7 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Text.Json.Serialization;
 
 public class AcademyOrganisation
 {
+
+    public string Laestab => $"{LocalAuthorityCode}{EstablishmentNumber}";
+
     [JsonPropertyName("urn")]
     public string Urn { get; set; } = string.Empty;
 

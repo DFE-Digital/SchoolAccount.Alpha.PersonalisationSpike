@@ -9,5 +9,6 @@ namespace SchoolAccount.Alpha.ViewModels
         public string NumberOfPupils { get; set; } = string.Empty;
         public string PercentageEligibleForFsm { get; set; } = string.Empty;
         public string PercentageFsm { get; set; } = string.Empty;
+        public CensusDetailsViewModel? CensusDetails { get; set; }
     }
 }

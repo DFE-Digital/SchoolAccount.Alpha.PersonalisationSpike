@@ -1,0 +1,75 @@
+@model SchoolAccount.Alpha.ViewModels.CensusDetailsViewModel
+@{
+    ViewData["Title"] = "School Details";
+}
+
+<h2 class="govuk-heading-m">Census '@Model.Name' Details</h2>
+
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Status
+        </dt>
+        <dd class="govuk-summary-list__value">
+            @Model.Status
+        </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Errors
+        </dt>
+        <dd class="govuk-summary-list__value">
+            @Model.Errors
+        </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Queries
+        </dt>
+        <dd class="govuk-summary-list__value">
+            @Model.Queries
+        </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Resolved Queries and Errors
+        </dt>
+        <dd class="govuk-summary-list__value">
+            @Model.OkdErrorsQueries
+        </dd>
+    </div>
+    @if (Model.SubmittedDate.HasValue)
+    {
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Submitted Date
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Model.SubmittedDate.Value.ToString("MMMM d, yyyy")
+            </dd>
+        </div>
+    }
+    @if (Model.AuthorisedDate.HasValue)
+    {
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Authorised Date
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Model.AuthorisedDate.Value.ToString("MMMM d, yyyy")
+            </dd>
+        </div>
+    }
+    @if (Model.ApprovedDate.HasValue)
+    {
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Approved Date
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Model.ApprovedDate.Value.ToString("MMMM d, yyyy")
+            </dd>
+        </div>
+    }
+</dl>
+

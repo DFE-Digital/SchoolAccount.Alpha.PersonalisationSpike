@@ -53,6 +53,10 @@
                 </dd>
             </div>
         </dl>
+        @if (Model.CensusDetails != null)
+        {
+            <partial name="_Census" model="Model.CensusDetails" />
+        }
 
         <p class="govuk-body">
             <a asp-action="Organisations" class="govuk-link">Back to organisations</a>
