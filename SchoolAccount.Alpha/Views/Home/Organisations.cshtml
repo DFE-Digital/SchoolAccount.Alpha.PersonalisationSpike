@@ -10,7 +10,7 @@
 <ul class="govuk-list">
     @foreach (var org in Model.Organisations)
     {
-        var link = org.Category.Id == "001" ? "School" : "Group";
+        var link = org.Category.Id == "001" ? "School" : "Trust";
 
         <li>
             <a class="govuk-link" asp-action="@link" asp-route-ukprn="@org.Ukprn">

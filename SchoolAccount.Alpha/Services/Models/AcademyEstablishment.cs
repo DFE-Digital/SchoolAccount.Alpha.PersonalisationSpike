@@ -4,6 +4,8 @@ namespace SchoolAccount.Alpha.Services.Models;
 
 public class AcademyEstablishment
 {
+    public string Laestab => $"{LocalAuthorityCode}{EstablishmentNumber}";
+
     [JsonPropertyName("urn")]
     public string Urn { get; set; } = string.Empty;
 

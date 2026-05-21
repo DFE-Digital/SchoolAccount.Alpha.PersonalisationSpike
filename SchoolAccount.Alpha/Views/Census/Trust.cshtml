@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = $"Census Summary for {Model.TrustName}";
+}
+@model SchoolAccount.Alpha.ViewModels.CensusTrustViewModel
+
+
+<h2 class="govuk-heading-m">Census submissions for establishments in @Model.TrustName</h2>
+
+<table class="govuk-table govuk-table--small-text-until-tablet">
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">School Name</th>
+            <th scope="row" class="govuk-table__header">Errors</th>
+            <th scope="row" class="govuk-table__header">Queries</th>
+            <th scope="row" class="govuk-table__header">OK'd Errors</th>
+            <th scope="row" class="govuk-table__header">Submitted</th>
+            <th scope="row" class="govuk-table__header">Approved</th>
+            <th scope="row" class="govuk-table__header">Authorised</th>
+            <th scope="row" class="govuk-table__header">Status</th>
+        </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+        @foreach (var census in Model.CensusDetails)
+        {
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">@census.Name</th>
+                <td class="govuk-table__cell govuk-table__cell--numeric">@census.Errors</td>
+                <td class="govuk-table__cell govuk-table__cell--numeric">@census.Queries</td>
+                <td class="govuk-table__cell govuk-table__cell--numeric">@census.OkdErrorsQueries</td>
+                <td class="govuk-table__cell">
+                    @if (census.SubmittedDate.HasValue)
+                    {
+                        @census.SubmittedDate.Value.ToString("dd MMM yyyy")
+                    }
+                    else
+                    {
+                        <span class="govuk-hint">Not submitted</span>
+                    }
+                </td>
+                <td class="govuk-table__cell">
+                    @if (census.ApprovedDate.HasValue)
+                    {
+                        @census.ApprovedDate.Value.ToString("dd MMM yyyy")
+                    }
+                    else
+                    {
+                        <span class="govuk-hint">Not approved</span>
+                    }
+                </td>
+                <td class="govuk-table__cell">
+                    @if (census.AuthorisedDate.HasValue)
+                    {
+                        @census.AuthorisedDate.Value.ToString("dd MMM yyyy")
+                    }
+                    else
+                    {
+                        <span class="govuk-hint">Not authorised</span>
+                    }
+                </td>
+                <td class="govuk-table__cell">@census.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.CensusDetails.Any())
+{
+    <p class="govuk-body">No census data available for this trust.</p>
+}
+
+<p class="govuk-body">
+    <a asp-controller="Home" asp-action="Trust" asp-route-ukprn="@Model.TrustUkprn" class="govuk-link">Back to trust details</a>
+</p>

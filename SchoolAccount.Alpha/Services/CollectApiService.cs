@@ -9,12 +9,13 @@ namespace SchoolAccount.Alpha.Services
     public interface ICollectApiService
     {
         Task<CensusCollectionSummary?> GetSubmissionSummary(string collection, string laestab);
+        Task<List<CensusCollectionSummary>> GetSubmissionSummaries(string collection, List<string> laestabs);
     }
 
     public class CollectApiService(HttpClient httpClient, IOptions<CollectApiConfig> options) : ICollectApiService
     {
         private readonly CollectApiConfig _apiConfig = options.Value;
-
+        public const int ApprovedCode = 7;
         public async Task<CensusCollectionSummary?> GetSubmissionSummary(string collection, string laestab)
         {
             var queryParams = new List<KeyValuePair<string, string>>
@@ -39,5 +40,30 @@ namespace SchoolAccount.Alpha.Services
 
             return await response.Content.ReadFromJsonAsync<CensusCollectionSummary>();
         }
+        public async Task<List<CensusCollectionSummary>> GetSubmissionSummaries(string collection, List<string> laestabs)
+        {
+            var queryParams = new List<KeyValuePair<string, string>>
+            {
+                new("collection", collection),
+                new("laestabs", string.Join(",", laestabs))
+            };
+
+            var url = QueryHelpers.AddQueryString("Collection/summaries", queryParams!);
+
+            var response = await httpClient.GetAsync(url);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return new List<CensusCollectionSummary>();
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApiException($"{response.StatusCode}: Could not read census status", response.StatusCode);
+            }
+
+            return await response.Content.ReadFromJsonAsync<List<CensusCollectionSummary>>() ?? new List<CensusCollectionSummary>();
+        }
+
     }
 }
