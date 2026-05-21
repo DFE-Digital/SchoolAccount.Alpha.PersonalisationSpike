@@ -8,4 +8,16 @@ public class GroupViewModel
     public string TrustName { get; set; } = String.Empty;
     public string TrustUkPrn { get; set; } = String.Empty;
     public string CensusSummaryMessage { get; set; } = string.Empty;
+
+    public GroupViewModel()
+    {
+    }
+
+    public GroupViewModel(AcademyTrust trust, string censusSummaryMessage)
+    {
+        TrustName = trust.GiasData?.GroupName ?? "Unknown";
+        TrustUkPrn = trust.GiasData?.Ukprn ?? "Unknown";
+        CensusSummaryMessage = censusSummaryMessage;
+        Establishments = trust.Establishments;
+    }
 }

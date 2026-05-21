@@ -17,33 +17,20 @@ namespace SchoolAccount.Alpha.Controllers
             }
 
             var trust = await academiesApiService.GetTrustDetails(ukprn);
-
-
-            var trustLaestabs = trust?.Establishments.Select(e => e.Laestab).ToList() ?? new List<string>();
-            if (trustLaestabs.Any())
+            if (trust == null)
             {
-                var censusDetails =
-                    await collectApiService.GetSubmissionSummaries("SchoolCensus 2025_Spring", trustLaestabs);
-                CensusTrustViewModel viewModel = new CensusTrustViewModel()
-                {
-                    TrustName = trust.GiasData.GroupName,
-                    TrustUkprn = ukprn,
-                    CensusDetails = censusDetails.Select(c => new CensusDetailsViewModel()
-                    {
-                        Name = c.SchoolName,
-                        Errors = c.Errors,
-                        Queries = c.Queries,
-                        OkdErrorsQueries = c.OkdErrorsQueries,
-                        Status = c.ReturnStatus,
-                        SubmittedDate = c.SubmittedDate,
-                        ApprovedDate = c.ApprovedDate,
-                        AuthorisedDate = c.AuthorisedDate
-                    }).ToList()
-                };
-                return View(viewModel);
+                return NotFound($"Trust with UKPRN {ukprn} not found");
             }
 
-            return NotFound($"Trust with UKPRN {ukprn} not found");
+            var trustLaestabs = trust.Establishments.Select(e => e.Laestab).ToList();
+            if (!trustLaestabs.Any())
+            {
+                return NotFound($"Trust with UKPRN {ukprn} has no establishments");
+            }
+
+            var censusDetails = await collectApiService.GetSubmissionSummaries("SchoolCensus 2025_Spring", trustLaestabs);
+
+            return View(new CensusTrustViewModel(trust, censusDetails));
         }
     }
 }

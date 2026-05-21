@@ -23,7 +23,7 @@
         @foreach (var census in Model.CensusDetails)
         {
             <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">@census.Name</th>
+                <th scope="row" class="govuk-table__header">@census.SchoolName</th>
                 <td class="govuk-table__cell govuk-table__cell--numeric">@census.Errors</td>
                 <td class="govuk-table__cell govuk-table__cell--numeric">@census.Queries</td>
                 <td class="govuk-table__cell govuk-table__cell--numeric">@census.OkdErrorsQueries</td>

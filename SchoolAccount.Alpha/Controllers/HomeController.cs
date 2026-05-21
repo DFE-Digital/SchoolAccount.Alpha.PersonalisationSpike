@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolAccount.Alpha.Services;
 using SchoolAccount.Alpha.ViewModels;
-using System.Diagnostics;
-using System.Linq;
 
 namespace SchoolAccount.Alpha.Controllers
 {
@@ -31,7 +29,7 @@ namespace SchoolAccount.Alpha.Controllers
             var allOrgs = await dsiApiService.GetUserOrganisations(user.DsiId);
             // remove orgs that aren't school account related
             var filteredOrgs = allOrgs.Where(o => !string.IsNullOrEmpty(o.Ukprn)).ToList();
-            return View(new UserViewModel { Name = user.GivenName, LastName = user.LastName, Organisations = filteredOrgs });
+            return View(new UserViewModel(user, filteredOrgs));
         }
 
         public async Task<IActionResult> School(string ukprn)
@@ -43,42 +41,15 @@ namespace SchoolAccount.Alpha.Controllers
 
             var user = UserService.GetUser(User.Claims);
 
-            var academyDetails = await academiesApiService.GetOrganisationDetails(ukprn);
-            if (academyDetails == null)
+            var schoolDetails = await academiesApiService.GetOrganisationDetails(ukprn);
+            if (schoolDetails == null)
             {
                 return NotFound($"School with UKPRN {ukprn} not found");
             }
 
-            var censusSummary = await collectApiService.GetSubmissionSummary("SchoolCensus 2025_Spring", academyDetails.Laestab);
-            CensusDetailsViewModel? censusDetails = censusSummary == null
-                ? null
-                : new CensusDetailsViewModel
-                {
-                    Name = censusSummary.Collection,
-                    Status = censusSummary.ReturnStatus,
-                    Errors = censusSummary.Errors,
-                    Queries = censusSummary.Queries,
-                    OkdErrorsQueries = censusSummary.OkdErrorsQueries,
-                    SubmittedDate = censusSummary.SubmittedDate,
-                    ApprovedDate = censusSummary.ApprovedDate,
-                    AuthorisedDate = censusSummary.AuthorisedDate,
+            var censusSummary = await collectApiService.GetSubmissionSummary("SchoolCensus 2025_Spring", schoolDetails.Laestab);
 
-                };
-
-
-            var viewModel = new SchoolViewModel
-            {
-                UserName = $"{user.GivenName} {user.LastName}",
-                SchoolName = academyDetails.EstablishmentName,
-                SchoolType = academyDetails.EstablishmentType?.Name ?? "Unknown",
-                PhaseOfEducation = academyDetails.PhaseOfEducation?.Name ?? "Unknown",
-                NumberOfPupils = academyDetails.Census?.NumberOfPupils ?? "Unknown",
-                PercentageEligibleForFsm = academyDetails.Census?.PercentageEligableForFSM6Years ?? "Unknown",
-                PercentageFsm = academyDetails.Census?.PercentageFsm ?? "Unknown",
-                CensusDetails = censusDetails
-            };
-
-            return View(viewModel);
+            return View(new SchoolViewModel(user, schoolDetails, censusSummary));
         }
 
         [Authorize]
@@ -94,6 +65,7 @@ namespace SchoolAccount.Alpha.Controllers
             {
                 return NotFound($"Trust with UKPRN {ukprn} not found");
             }
+
             string censusSummaryMessage = String.Empty;
             var trustLaestabs = trust.Establishments.Select(e => e.Laestab).ToList();
             if (trustLaestabs.Any())
@@ -103,18 +75,11 @@ namespace SchoolAccount.Alpha.Controllers
                 if (censusDetails.Any())
                 {
                     var totalApproved = censusDetails.Count(d => d.ReturnStatusCode == CollectApiService.ApprovedCode);
-                    censusSummaryMessage =
-                        $"{censusDetails.Count - totalApproved} of {censusDetails.Count} censuses are incomplete for Spring 2025";
+                    censusSummaryMessage = $"{censusDetails.Count - totalApproved} of {censusDetails.Count} censuses are incomplete for Spring 2025";
                 }
             }
 
-            return View(new GroupViewModel
-            {
-                TrustName = trust.GiasData?.GroupName ?? "Unknown", 
-                TrustUkPrn = trust.GiasData?.Ukprn ?? "Unknown",
-                CensusSummaryMessage = censusSummaryMessage,
-                Establishments = trust.Establishments
-            });
+            return View(new GroupViewModel(trust, censusSummaryMessage));
         }
 
         [AllowAnonymous]

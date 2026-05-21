@@ -7,5 +7,16 @@ namespace SchoolAccount.Alpha.ViewModels
         public string Name { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public List<DsiOrganisation> Organisations { get; set; } = new();
+
+        public UserViewModel()
+        {
+        }
+
+        public UserViewModel(SAUser user, List<DsiOrganisation> organisations)
+        {
+            Name = user.GivenName;
+            LastName = user.LastName;
+            Organisations = organisations;
+        }
     }
 }
