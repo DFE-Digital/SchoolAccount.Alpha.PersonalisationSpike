@@ -123,3 +123,17 @@ Search results are ordered by [relevance](https://docs.publishing.service.gov.uk
 Note: there are two timestamps available, `update_date` and `public_timestamp`. `update_date` is the time of the last indexing which may be significantly newer than `public_timestamp`, as that usually only reflects major updates and not minor ones.
 
 `public_timestamp` was selected for the prototype to prevent documents with minor changes from appearing as updated.
+
+## COLLECT API
+
+Integration with the [COLLECT API Technical Spike](https://github.com/DFE-Digital/SchoolAccount.Alpha.CollectAPISpike) has been added to this branch of the prototype to retrieve 'latest' census data.
+
+While the COLLECT API requires minimal information (UKPRN or LAEStab), the integration demonstrates the challenge around how we display domain specific information in a common way.
+
+'Headline' census information showing number of schools with incomplete census returns has been added to the trust details page. 
+
+The trust page also includes a link to a page showing all the schools and their statuses.
+
+The school details page now includes a census section showing the status and number or queries, errors, and OK'd errors, and submission dates.
+
+As the spike is using pre-canned data from a lower environment rather than live data, only sample data from Spring 2025 is available, which constrains the usefulness of the information displayed.
