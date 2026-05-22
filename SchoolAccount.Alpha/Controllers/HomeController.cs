@@ -9,7 +9,7 @@ using SchoolAccount.Alpha.ViewModels;
 namespace SchoolAccount.Alpha.Controllers
 {
     [Authorize]
-    public class HomeController(ILogger<HomeController> logger, IDsiApiService dsiApiService, IAcademiesApiService academiesApiService, ICollectApiService collectApiService) : Controller
+    public class HomeController(ILogger<HomeController> logger, IDsiApiService dsiApiService, IAcademiesApiService academiesApiService, ICensusService censusService) : Controller
     {
         private readonly ILogger<HomeController> _logger = logger;
 
@@ -47,12 +47,11 @@ namespace SchoolAccount.Alpha.Controllers
                 return NotFound($"School with UKPRN {ukprn} not found");
             }
 
-            var censusSummary = await collectApiService.GetSubmissionSummary(CollectApiService.DefaultCollection, schoolDetails.Laestab);
+            var censusSummary = await censusService.GetSchoolCensusStatus(schoolDetails.Laestab);
 
             return View(new SchoolViewModel(user, schoolDetails, censusSummary));
         }
 
-        [Authorize]
         public async Task<IActionResult> Trust(string ukprn)
         {
             if (string.IsNullOrEmpty(ukprn))
@@ -66,20 +65,10 @@ namespace SchoolAccount.Alpha.Controllers
                 return NotFound($"Trust with UKPRN {ukprn} not found");
             }
 
-            string censusSummaryMessage = String.Empty;
-            var trustLaestabs = trust.Establishments.Select(e => e.Laestab).ToList();
-            if (trustLaestabs.Any())
-            {
-                var censusDetails = await collectApiService.GetSubmissionSummaries(CollectApiService.DefaultCollection, trustLaestabs);
+            var laestabs = trust.Establishments.Select(e => e.Laestab).ToList();
+            string censusHeadline = await censusService.GetTrustCensusHeadline(laestabs);
 
-                if (censusDetails.Any())
-                {
-                    var totalApproved = censusDetails.Count(d => d.ReturnStatusCode == CollectApiService.ApprovedCode);
-                    censusSummaryMessage = $"{censusDetails.Count - totalApproved} of {censusDetails.Count} censuses are incomplete for Spring 2025";
-                }
-            }
-
-            return View(new GroupViewModel(trust, censusSummaryMessage));
+            return View(new GroupViewModel(trust, censusHeadline));
         }
 
         [AllowAnonymous]
