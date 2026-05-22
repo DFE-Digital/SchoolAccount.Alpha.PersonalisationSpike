@@ -5,7 +5,7 @@ using SchoolAccount.Alpha.Services;
 namespace SchoolAccount.Alpha.Controllers
 {
     [Authorize]
-    public class CensusController(ICensusService censusService)
+    public class CensusController(ICollectApiService censusService)
         : Controller
     {
         public async Task<IActionResult> Trust(string ukprn)

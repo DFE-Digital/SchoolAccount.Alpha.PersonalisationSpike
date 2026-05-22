@@ -6,15 +6,14 @@ namespace SchoolAccount.Alpha.Services
     public interface ICensusService
     {
         Task<TrustCensusStatus?> GetTrustCensusStatuses(string ukprn);
-        Task<CensusCollectionSummary?> GetSchoolCensusStatus(string laestab);
+        Task<CensusSummary?> GetSchoolCensusStatus(string laestab);
         Task<string> GetTrustCensusHeadline(List<string> laestabs);
     }
 
     public class CensusService(ICollectApiService collectApiService, IAcademiesApiService academiesApiService) : ICensusService
     {
-        public async Task<CensusCollectionSummary?> GetSchoolCensusStatus(string laestab)
+        public async Task<CensusSummary?> GetSchoolCensusStatus(string laestab)
         {
-
             var censusSummary = await collectApiService.GetSubmissionSummary(GetLatestCensus(), laestab);
             return censusSummary;
         }
@@ -63,7 +62,7 @@ namespace SchoolAccount.Alpha.Services
             };
         }
 
-        private List<CensusStatus> BuildSummaryList(List<CensusCollectionSummary> censusDetails, List<AcademyEstablishment> establishments)
+        private List<CensusStatus> BuildSummaryList(List<CensusSummary> censusDetails, List<AcademyEstablishment> establishments)
         {
             var censusStatuses = censusDetails
                 .Join(establishments,
@@ -80,7 +79,7 @@ namespace SchoolAccount.Alpha.Services
 
             return censusStatuses;
         }
-        
+
         public string GetLatestCensus()
         {
             return "SchoolCensus 2025_Spring";

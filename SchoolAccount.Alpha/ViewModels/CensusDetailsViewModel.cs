@@ -21,7 +21,7 @@ namespace SchoolAccount.Alpha.ViewModels
         {
         }
 
-        public CensusDetailsViewModel(CensusCollectionSummary summary)
+        public CensusDetailsViewModel(CensusSummary summary)
         {
             Name = summary.Collection;
             SchoolName = summary.SchoolName;

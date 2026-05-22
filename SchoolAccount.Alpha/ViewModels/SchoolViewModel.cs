@@ -17,7 +17,7 @@ namespace SchoolAccount.Alpha.ViewModels
         {
         }
 
-        public SchoolViewModel(SAUser user, AcademyOrganisation academyDetails, CensusCollectionSummary? censusSummary)
+        public SchoolViewModel(SAUser user, AcademyOrganisation academyDetails, CensusSummary? censusSummary)
         {
             UserName = $"{user.GivenName} {user.LastName}";
             SchoolName = academyDetails.EstablishmentName;

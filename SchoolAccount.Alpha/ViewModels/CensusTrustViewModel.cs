@@ -16,7 +16,7 @@ public class CensusTrustViewModel
     {
     }
 
-    public CensusTrustViewModel(AcademyTrust trust, List<CensusCollectionSummary> censusSubmissions, CollectionDetails collectionDetails)
+    public CensusTrustViewModel(AcademyTrust trust, List<CensusSummary> censusSubmissions, CollectionDetails collectionDetails)
     {
         TrustName = trust.GiasData?.GroupName ?? "Unknown trust";
         TrustUkprn = trust.GiasData?.Ukprn ?? string.Empty;

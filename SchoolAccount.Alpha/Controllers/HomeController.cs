@@ -9,7 +9,7 @@ using SchoolAccount.Alpha.ViewModels;
 namespace SchoolAccount.Alpha.Controllers
 {
     [Authorize]
-    public class HomeController(ILogger<HomeController> logger, IDsiApiService dsiApiService, IAcademiesApiService academiesApiService, ICensusService censusService) : Controller
+    public class HomeController(ILogger<HomeController> logger, IDsiApiService dsiApiService, IAcademiesApiService academiesApiService, ICollectApiService censusService) : Controller
     {
         private readonly ILogger<HomeController> _logger = logger;
 

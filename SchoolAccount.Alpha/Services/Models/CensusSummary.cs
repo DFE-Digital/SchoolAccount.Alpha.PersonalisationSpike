@@ -2,7 +2,7 @@
 
 namespace SchoolAccount.Alpha.Services.Models;
 
-public class CensusCollectionSummary
+public class CensusSummary
 {
     [JsonPropertyName("returnStatusCode")]
     public int ReturnStatusCode { get; set; }
