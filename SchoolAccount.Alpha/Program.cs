@@ -36,7 +36,6 @@ builder.Services.AddControllersWithViews();
 
 // register app services
 builder.Services.AddSingleton<ITaxonService, TaxonService>();
-builder.Services.AddScoped<ICensusService, CensusService>();
 builder.Services.AddOptions<DsiApiConfig>()
     .Bind(builder.Configuration.GetSection("DfeSignInApi"))
     .ValidateDataAnnotations()
