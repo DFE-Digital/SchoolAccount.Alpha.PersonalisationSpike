@@ -7,7 +7,7 @@ namespace SchoolAccount.Alpha.Services
     public interface ICollectApiService
     {
         Task<CensusSummary?> GetSchoolCensusStatus(string laestab);
-        Task<TrustCensusStatus?> GetTrustCensusStatuses(string laestab);
+        Task<TrustCensusStatus?> GetTrustCensusStatuses(string ukprn);
         Task<string> GetTrustCensusHeadline(List<string> laestabs);
     }
 
@@ -40,11 +40,11 @@ namespace SchoolAccount.Alpha.Services
             return await response.Content.ReadFromJsonAsync<CensusSummary>();
         }
 
-        public async Task<TrustCensusStatus?> GetTrustCensusStatuses(string laestab)
+        public async Task<TrustCensusStatus?> GetTrustCensusStatuses(string ukprn)
         {
             var queryParams = new List<KeyValuePair<string, string>>
             {
-                new("laestab", laestab)
+                new("ukprn", ukprn)
             };
 
             var url = QueryHelpers.AddQueryString("census/latest/trust", queryParams!);

@@ -5,12 +5,12 @@ using SchoolAccount.Alpha.Services;
 namespace SchoolAccount.Alpha.Controllers
 {
     [Authorize]
-    public class CensusController(ICollectApiService censusService)
+    public class CensusController(ICollectApiService collectApiService)
         : Controller
     {
         public async Task<IActionResult> Trust(string ukprn)
         {
-            var result = await censusService.GetTrustCensusStatuses(ukprn);
+            var result = await collectApiService.GetTrustCensusStatuses(ukprn);
             
             if (result == null)
             {
