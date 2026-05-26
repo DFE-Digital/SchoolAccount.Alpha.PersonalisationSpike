@@ -9,7 +9,7 @@ using SchoolAccount.Alpha.ViewModels;
 namespace SchoolAccount.Alpha.Controllers
 {
     [Authorize]
-    public class HomeController(ILogger<HomeController> logger,
+    public class HomeController(
         IDsiApiService dsiApiService,
         IAcademiesApiService academiesApiService,
         ICollectApiService collectApiService) : Controller
@@ -49,9 +49,10 @@ namespace SchoolAccount.Alpha.Controllers
                 return NotFound($"School with UKPRN {ukprn} not found");
             }
 
+            var latestCensuses = await collectApiService.GetLatestCensuses();
             var censusSummary = await collectApiService.GetSchoolCensusStatus(schoolDetails.Laestab);
 
-            return View(new SchoolViewModel(user, schoolDetails, censusSummary));
+            return View(new SchoolViewModel(user, schoolDetails, censusSummary, latestCensuses));
         }
 
         public async Task<IActionResult> Trust(string ukprn)
@@ -67,10 +68,12 @@ namespace SchoolAccount.Alpha.Controllers
                 return NotFound($"Trust with UKPRN {ukprn} not found");
             }
 
+            var latestCensuses = await collectApiService.GetLatestCensuses();
+
             var laestabs = trust.Establishments.Select(e => e.Laestab).ToList();
             string censusHeadline = await collectApiService.GetTrustCensusHeadline(laestabs);
 
-            return View(new GroupViewModel(trust, censusHeadline));
+            return View(new GroupViewModel(trust, censusHeadline, latestCensuses));
         }
 
         [AllowAnonymous]

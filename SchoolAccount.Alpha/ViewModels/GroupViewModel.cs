@@ -9,15 +9,19 @@ public class GroupViewModel
     public string TrustUkPrn { get; set; } = String.Empty;
     public string CensusHeadline { get; set; } = string.Empty;
 
+    public List<CollectionDetail> Censuses { get; set; } = new();
+
     public GroupViewModel()
     {
     }
 
-    public GroupViewModel(AcademyTrust trust, string censusHeadline)
+    public GroupViewModel(AcademyTrust trust, string censusHeadline, List<CollectionDetail> censuses)
     {
         TrustName = trust.GiasData?.GroupName ?? "Unknown";
         TrustUkPrn = trust.GiasData?.Ukprn ?? "Unknown";
         CensusHeadline = censusHeadline;
         Establishments = trust.Establishments;
+        Censuses = censuses;
     }
+
 }

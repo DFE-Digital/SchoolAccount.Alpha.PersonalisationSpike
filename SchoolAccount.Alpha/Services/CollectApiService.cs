@@ -9,12 +9,29 @@ namespace SchoolAccount.Alpha.Services
         Task<CensusSummary?> GetSchoolCensusStatus(string laestab);
         Task<TrustCensusStatus?> GetTrustCensusStatuses(string ukprn);
         Task<string> GetTrustCensusHeadline(List<string> laestabs);
+        Task<List<CollectionDetail>> GetLatestCensuses();
     }
 
     public class CollectApiService(HttpClient httpClient) : ICollectApiService
     {
-        public const int ApprovedCode = 7;
-        public const string DefaultCollection = "SchoolCensus 2025_Spring";
+
+        public async Task<List<CollectionDetail>> GetLatestCensuses()
+        {
+            var response = await httpClient.GetAsync("census/latest");
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return new List<CollectionDetail>();
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApiException($"{response.StatusCode}: Could not retrieve latest censuses", response.StatusCode);
+            }
+
+            return await response.Content.ReadFromJsonAsync<List<CollectionDetail>>() ?? new();
+
+        }
 
         public async Task<CensusSummary?> GetSchoolCensusStatus(string laestab)
         {

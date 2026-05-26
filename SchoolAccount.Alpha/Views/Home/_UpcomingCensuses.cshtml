@@ -1,0 +1,10 @@
+@model List<SchoolAccount.Alpha.Services.Models.CollectionDetail>
+
+<h2 class="govuk-heading-m">Upcoming Censuses</h2>
+<ul class="govuk-list govuk-list--bullet">
+    @foreach (var census in Model)
+    {
+        <li>@census.DCName - available @census.OpenDate?.ToString("dd MMM yyyy"), due @census.DueDate?.ToString("dd MMM yyyy")</li>
+    }
+</ul>
+

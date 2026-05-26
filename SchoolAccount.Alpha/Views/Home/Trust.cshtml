@@ -6,8 +6,14 @@
 
 <h1 class="govuk-heading-l">Trust Details - @Model.TrustName</h1>
 
-<p class="govuk-body">@Model.CensusHeadline<br /> 
-    <a asp-controller="Census" asp-action="Trust" asp-route-ukprn="@Model.TrustUkPrn">View more details</a></p>
+<h2 class="govuk-heading-m">Census Status</h2>
+
+<p class="govuk-body">
+    @Model.CensusHeadline<br />
+    <a asp-controller="Census" asp-action="Trust" asp-route-ukprn="@Model.TrustUkPrn">View more details</a>
+</p>
+
+<partial name="_UpcomingCensuses" model="Model.Censuses" />
 <h2 class="govuk-heading-m">The trust includes the following establishments:</h2>
 <ul class="govuk-list">
     @foreach (var org in Model.Establishments)

@@ -12,12 +12,13 @@ namespace SchoolAccount.Alpha.ViewModels
         public string PercentageEligibleForFsm { get; set; } = string.Empty;
         public string PercentageFsm { get; set; } = string.Empty;
         public CensusDetailsViewModel? CensusDetails { get; set; }
+        public List<CollectionDetail> Censuses { get; set; } = new();
 
         public SchoolViewModel()
         {
         }
 
-        public SchoolViewModel(SAUser user, AcademyOrganisation academyDetails, CensusSummary? censusSummary)
+        public SchoolViewModel(SAUser user, AcademyOrganisation academyDetails, CensusSummary? censusSummary, List<CollectionDetail> censuses)
         {
             UserName = $"{user.GivenName} {user.LastName}";
             SchoolName = academyDetails.EstablishmentName;
@@ -27,6 +28,8 @@ namespace SchoolAccount.Alpha.ViewModels
             PercentageEligibleForFsm = academyDetails.Census?.PercentageEligableForFSM6Years ?? "Unknown";
             PercentageFsm = academyDetails.Census?.PercentageFsm ?? "Unknown";
             CensusDetails = censusSummary != null ? new CensusDetailsViewModel(censusSummary) : null;
+            Censuses = censuses;
         }
+
     }
 }

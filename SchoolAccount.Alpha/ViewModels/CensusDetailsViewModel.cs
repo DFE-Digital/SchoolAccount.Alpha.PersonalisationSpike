@@ -1,5 +1,4 @@
-﻿using SchoolAccount.Alpha.Services;
-using SchoolAccount.Alpha.Services.Models;
+﻿using SchoolAccount.Alpha.Services.Models;
 
 namespace SchoolAccount.Alpha.ViewModels
 {
@@ -15,7 +14,6 @@ namespace SchoolAccount.Alpha.ViewModels
         public DateTime? SubmittedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public DateTime? AuthorisedDate { get; set; }
-        public string TagColor { get; set; } = "grey";
 
         public CensusDetailsViewModel()
         {
@@ -32,8 +30,6 @@ namespace SchoolAccount.Alpha.ViewModels
             SubmittedDate = summary.SubmittedDate;
             ApprovedDate = summary.ApprovedDate;
             AuthorisedDate = summary.AuthorisedDate;
-            TagColor = summary.ReturnStatusCode == CollectApiService.ApprovedCode ? "green" : "yellow";
         }
-
     }
 }
