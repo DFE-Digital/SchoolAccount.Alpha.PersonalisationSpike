@@ -137,3 +137,5 @@ The trust page also includes a link to a page showing all the schools and their 
 The school details page now includes a census section showing the status and number or queries, errors, and OK'd errors, and submission dates.
 
 As the spike is using pre-canned data from a lower environment rather than live data, only sample data from Spring 2025 is available, which constrains the usefulness of the information displayed.
+
+Both the Trust and School pages provide a list of the latest three censuses.
