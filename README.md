@@ -14,6 +14,8 @@ The service allows a user to:
 
 ## Requirements
 
+This project targets .NET 10 and requires the .NET 10 SDK.
+
 To run the project a DSI Application registration is required, including an API key. 
 An application registration can be initiated via a 'Service Now' request. 
 
