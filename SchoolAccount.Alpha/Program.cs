@@ -95,7 +95,7 @@ else
 }
 
 // Add status code pages for 404, 403, etc.
-app.UseStatusCodePagesWithReExecute("/Error/{0}");
+ app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

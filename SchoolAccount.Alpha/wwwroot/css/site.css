@@ -1,25 +1,921 @@
-html {
-  font-size: 14px;
+:root {
+    /** Colour Scheme */
+    /* See (16/07/25): https://design-system.service.gov.uk/styles/colour/ */
+    --govuk-colour--red:	        #d4351c;
+    --govuk-colour--yellow:	        #ffdd00;
+    --govuk-colour--green:	        #00703c;
+    --govuk-colour--blue:	        #1d70b8;
+    --govuk-colour--dark-blue:	    #003078;
+    --govuk-colour--light-blue:	    #5694ca;
+    --govuk-colour--purple:	        #4c2c92;
+    --govuk-colour--black:	        #0b0c0c;
+    --govuk-colour--dark-grey:	    #505a5f;
+    --govuk-colour--mid-grey:	    #b1b4b6;
+    --govuk-colour--light-grey:	    #f3f2f1;
+    --govuk-colour--white:	        #ffffff;
+    --govuk-colour--light-purple:	#6f72af;
+    --govuk-colour--bright-purple:	#912b88;
+    --govuk-colour--pink:	        #d53880;
+    --govuk-colour--light-pink:	    #f499be;
+    --govuk-colour--orange:	        #f47738;
+    --govuk-colour--brown:	        #b58840;
+    --govuk-colour--light-green:	#85994b;
+    --govuk-colour--turquoise:	    #28a197;
+    /** Component Colours */
+    /* See (16/07/25): https://design-system.service.gov.uk/styles/colour/ */
+    --govuk-text-colour: var(--govuk-colour--black, #0b0c0c);
+    --govuk-secondary-text-colour: var(--govuk-colour--dark-grey, #505a5f);
+    --govuk-link-colour: var(--govuk-colour--blue, #1d70b8);
+    --govuk-link-hover-colour: var(--govuk-colour--dark-blue, #003078);
+    --govuk-link-visited-colour: var(--govuk-colour--purple, #4c2c92);
+    --govuk-link-active-colour: var(--govuk-colour--black, #0b0c0c);
+    --govuk-border-colour: var(--govuk-colour--mid-grey, #b1b4b6);
+    --govuk-input-border-colour: var(--govuk-colour--black, #0b0c0c);
+    --govuk-focus-colour: var(--govuk-colour--yellow, #ffdd00);
+    --govuk-focus-text-colour: var(--govuk-colour--black, #0b0c0c);
+    --govuk-error-colour: var(--govuk-colour--red, #d4351c);
+    --govuk-success-colour: var(--govuk-colour--green, #00803c);
+    --govuk-brand-colour: var(--govuk-colour--blue, #1d70b8);
+    /** Responsive Spacing */
+    /* See (16/07/25): https://design-system.service.gov.uk/styles/spacing/ */
+    --govuk-spacing-responsive--0 : 0px;
+    --govuk-spacing-responsive--1 : 5px;
+    --govuk-spacing-responsive--2 : 10px;
+    --govuk-spacing-responsive--3 : 15px;
+    --govuk-spacing-responsive--4 : 20px;
+    --govuk-spacing-responsive--5 : 25px;
+    --govuk-spacing-responsive--6 : 30px;
+    --govuk-spacing-responsive--7 : 40px;
+    --govuk-spacing-responsive--8 : 50px;
+    --govuk-spacing-responsive--9 : 60px;
+    /** Static Spacing */
+    /* See (16/07/25): https://design-system.service.gov.uk/styles/spacing/ */
+    --govuk-spacing-static--0: 0px;
+    --govuk-spacing-static--1: 5px;
+    --govuk-spacing-static--2: 10px;
+    --govuk-spacing-static--3: 15px;
+    --govuk-spacing-static--4: 20px;
+    --govuk-spacing-static--5: 25px;
+    --govuk-spacing-static--6: 30px;
+    --govuk-spacing-static--7: 40px;
+    --govuk-spacing-static--8: 50px;
+    --govuk-spacing-static--9: 60px;
 }
 
-@media (min-width: 768px) {
-  html {
+@media screen and (max-width: 640px) {
+    :root {
+        --govuk-spacing-responsive--0 : 0px;
+        --govuk-spacing-responsive--1 : 5px;
+        --govuk-spacing-responsive--2 : 10px;
+        --govuk-spacing-responsive--3 : 15px;
+        --govuk-spacing-responsive--4 : 15px;
+        --govuk-spacing-responsive--5 : 15px;
+        --govuk-spacing-responsive--6 : 20px;
+        --govuk-spacing-responsive--7 : 25px;
+        --govuk-spacing-responsive--8 : 30px;
+        --govuk-spacing-responsive--9 : 40px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.govuk-header__link .govuk-header__logotype{
+    height: 30px;
+}
+
+.govuk-header__link:focus .govuk-header__logotype{
+    content: url("/lib/dfe-frontend/assets/image/department-for-education_black.png");
+    height: 30px;
+}
+
+.govuk-footer__copyright-logo::before {
+    content: none !important;
+    display: none !important;
+}
+
+.govuk-footer__copyright-logo {
+    display: inline-block !important;
+    min-width: 125px !important;
+    padding-top: 112px !important;
+    background-image: url("/lib/dfe-frontend/assets/image/dfe-crest.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: 50% 0 !important;
+    background-size: 125px 102px !important;
+}
+/* Top Navigation */
+
+.dfe-header-container {
+    display: flex;
+    align-items: center;
+}
+
+.dfe-header-container nav.dfe-user-menu {
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dfe-header-container nav.dfe-user-menu > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
+.dfe-header-container nav.dfe-user-menu > ul > li {
+    margin: 0 !important;
+    padding: var(--govuk-spacing-responsive--4);
+    position: relative;
+    font-size: 80%;
+    line-break: strict;
+    word-break: break-all;
+    white-space: nowrap;
+    translate: 0 -1px;
+}
+
+.dfe-header-container nav.dfe-user-menu > ul:last-child > li:last-child {
+    padding-right: 0;
+}
+
+.dfe-header-container nav.dfe-user-menu > ul > li a:visited,
+a.dfe-nav-link {
+    color: var(--govuk-colour--white);
+}
+
+.dfe-header-container nav.dfe-user-menu > ul > li:not(:last-child):after {
+    content: '';
+    width: 2px;
+    height: 40%;
+    background: white;
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    translate: -50% -50%;
+    opacity: .6;
+}
+
+@media (max-width: 1000px) {
+    .dfe-header-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .dfe-header-container nav.dfe-user-menu {
+        margin-left: 0;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .dfe-header-container nav.dfe-user-menu > ul {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .dfe-header-container nav.dfe-user-menu > ul > li {
+        padding: var(--govuk-spacing-responsive--2);
+    }
+
+    .dfe-header-container nav.dfe-user-menu > ul:first-child > li:first-child {
+        padding-left: 0;
+    }
+}
+
+/* defaultas */
+
+.govuk-link:link {
+    word-break: break-word;
+}
+
+/* temp */
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0  calc(var(--govuk-spacing-responsive--2) * -1);
+}
+
+.card {
+    border: var(--govuk-spacing-static--1) solid var(--govuk-border-colour);
+    padding: var(--govuk-spacing-responsive--4);
+    width: calc(33.33% - 10px - (var(--govuk-spacing-responsive--4) * 2) - (var(--govuk-spacing-responsive--2) * 2));
+    margin: var(--govuk-spacing-responsive--2);
+}
+
+.card h1.card-title {
+    font-size: 2em;
+}
+
+/* =========================================================
+   DfE Connect Header
+   ========================================================= */
+
+header.dfe-connect-header,
+header.dfe-connect-header * {
+    box-sizing: border-box;
+}
+
+header.dfe-connect-header {
+    font-family: "GDS Transport", Arial, sans-serif;
+    color: #0b0c0c;
+
+    --dfe-blue: #1d70b8;
+    --dfe-blue-dark: #155a93;
+    --dfe-border: #b1b4b6;
+    --dfe-bg: #f3f2f1;
+
+    --dfe-focus-colour: #ffdd00;
+    --dfe-focus-text: #0b0c0c;
+    --dfe-focus-shadow: 0 -2px var(--dfe-focus-colour), 0 4px var(--dfe-focus-text);
+}
+
+/* Icons follow text colour so they go black on yellow focus */
+header.dfe-connect-header .dfe-connect-header__icon {
+    display: block;
+    fill: currentColor;
+}
+
+/* ------------------------------------------------------------
+   Focus styling (GOV.UK-like, scoped)
+   NOTE: search is handled separately as a grouped control
+------------------------------------------------------------- */
+header.dfe-connect-header a:focus-visible,
+header.dfe-connect-header button:focus-visible,
+header.dfe-connect-header input:focus-visible,
+header.dfe-connect-header select:focus-visible,
+header.dfe-connect-header textarea:focus-visible,
+header.dfe-connect-header [role="button"]:focus-visible,
+header.dfe-connect-header [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 3px solid transparent;
+    background-color: var(--dfe-focus-colour);
+    color: var(--dfe-focus-text);
+    box-shadow: var(--dfe-focus-shadow);
+    text-decoration: none;
+}
+
+header.dfe-connect-header a:focus-visible {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.15em;
+}
+
+/* ------------------------------------------------------------
+   Top blue band
+------------------------------------------------------------- */
+header.dfe-connect-header .dfe-connect-header__top {
+    background-color: var(--dfe-blue);
+    color: #F4F8FB;
+}
+
+header.dfe-connect-header .dfe-connect-header__top-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    min-height: 72px;
+}
+
+/* Brand (left) */
+header.dfe-connect-header .dfe-connect-header__brand {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+header.dfe-connect-header .dfe-connect-header__brand-link {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    text-decoration: none;
+    color: #F4F8FB;
+}
+
+header.dfe-connect-header .dfe-connect-header__dept-image {
+    height: 30px;
+    width: auto;
+    max-width: 260px;
+    display: block;
+    object-fit: contain;
+}
+
+/* Account/actions (right) */
+header.dfe-connect-header .dfe-connect-header__account {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
     font-size: 16px;
-  }
+    min-width: 0;
+    flex: 0 0 auto;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+header.dfe-connect-header .dfe-connect-header__school {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 420px;
+    color: #F4F8FB;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/* ------------------------------------------------------------
+   Search toggle (blue band)
+------------------------------------------------------------- */
+header.dfe-connect-header .dfe-connect-header__search-toggle {
+    height: 32px;
+    width: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    color: #F4F8FB;
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    border-right: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-body {
-  margin-bottom: 60px;
+header.dfe-connect-header .dfe-connect-header__icon--close {
+    display: none;
 }
+
+header.dfe-connect-header
+.dfe-connect-header__search-toggle[aria-expanded="true"] .dfe-connect-header__icon--search {
+    display: none;
+}
+
+header.dfe-connect-header
+.dfe-connect-header__search-toggle[aria-expanded="true"] .dfe-connect-header__icon--close {
+    display: block;
+}
+
+/* ------------------------------------------------------------
+   Sign out
+------------------------------------------------------------- */
+header.dfe-connect-header .dfe-connect-header__signout {
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    color: #F4F8FB;
+    text-decoration: underline;
+    white-space: nowrap;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* ------------------------------------------------------------
+   Full-width search panel
+------------------------------------------------------------- */
+header.dfe-connect-header .dfe-connect-header__search-panel {
+    background: var(--dfe-bg);
+    border-bottom: 1px solid var(--dfe-border);
+    padding: 24px 0;
+}
+
+header.dfe-connect-header .dfe-connect-header__search-panel[hidden] {
+    display: none !important;
+}
+
+header.dfe-connect-header .dfe-connect-header__search-title {
+    margin: 0 0 16px 0;
+}
+
+/* Desktop: keep search full-width like before (no max-width cap) */
+header.dfe-connect-header .dfe-connect-header__search-form {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    max-width: 920px; /* restore your original desktop width */
+}
+
+/* Input */
+header.dfe-connect-header .dfe-connect-header__search-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border-right: 0;
+    border-radius: 0;
+}
+
+/* Submit button */
+header.dfe-connect-header .dfe-connect-header__search-submit {
+    margin: 0;
+    min-width: 48px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    background-color: var(--dfe-blue);
+    border-color: var(--dfe-blue);
+    box-shadow: none;
+    color: #F4F8FB;
+}
+
+header.dfe-connect-header .dfe-connect-header__search-submit::before,
+header.dfe-connect-header .dfe-connect-header__search-submit::after {
+    content: none;
+}
+
+header.dfe-connect-header .dfe-connect-header__search-submit:hover {
+    background-color: var(--dfe-blue-dark);
+    border-color: var(--dfe-blue-dark);
+}
+
+/* --- Search grouped focus ring (yellow border around input+button) --- */
+header.dfe-connect-header .dfe-connect-header__search-form:focus-within {
+    outline: 3px solid transparent;
+    box-shadow: 0 0 0 4px var(--dfe-focus-colour);
+}
+
+/* Keep input interior white + black inner line when focused */
+header.dfe-connect-header .dfe-connect-header__search-form:focus-within
+.dfe-connect-header__search-input {
+    background: #F4F8FB;
+    color: var(--dfe-focus-text);
+    box-shadow: inset 0 0 0 2px var(--dfe-focus-text);
+}
+
+/* Avoid generic focus yellow background fighting inside the grouped control */
+header.dfe-connect-header .dfe-connect-header__search-form:focus-within
+.dfe-connect-header__search-input:focus-visible,
+header.dfe-connect-header .dfe-connect-header__search-form:focus-within
+.dfe-connect-header__search-submit:focus-visible {
+    background-color: initial;
+    color: inherit;
+    box-shadow: none;
+}
+
+/* Avoid double outlines on inner controls */
+header.dfe-connect-header .dfe-connect-header__search-input:focus-visible,
+header.dfe-connect-header .dfe-connect-header__search-submit:focus-visible {
+    outline: 0;
+}
+
+/* ------------------------------------------------------------
+   Service row + nav (desktop)
+------------------------------------------------------------- */
+header.dfe-connect-header .dfe-connect-header__service {
+    background-color: #F4F8FB;
+    border-bottom: 1px solid var(--dfe-blue);
+}
+
+header.dfe-connect-header .dfe-connect-header__service-row--desktop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+header.dfe-connect-header .dfe-connect-header__service-nav {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+header.dfe-connect-header .dfe-connect-header__service-name {
+    font-weight: 700;
+    font-size: 19px;
+    text-decoration: none;
+    color: #0b0c0c;
+}
+
+header.dfe-connect-header .dfe-connect-header__service-name:hover {
+    text-decoration: underline;
+}
+
+header.dfe-connect-header .dfe-connect-header__nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+}
+
+header.dfe-connect-header .dfe-connect-header__nav-item {
+    margin: 0;
+}
+
+header.dfe-connect-header .dfe-connect-header__nav-link {
+    text-decoration: none;
+    font-size: 16px;
+    color: var(--dfe-blue);
+    padding-bottom: 4px;
+}
+
+header.dfe-connect-header .dfe-connect-header__nav-link:hover {
+    text-decoration: underline;
+}
+
+header.dfe-connect-header
+.dfe-connect-header__nav-item--active .dfe-connect-header__nav-link {
+    border-bottom: 3px solid var(--dfe-blue);
+}
+
+/* ------------------------------------------------------------
+   Mobile menu
+------------------------------------------------------------- */
+header.dfe-connect-header .dfe-connect-header__mobile {
+    display: none;
+    background: #F4F8FB;
+    border-top: 1px solid var(--dfe-border);
+    border-bottom: 1px solid var(--dfe-border);
+}
+
+header.dfe-connect-header .dfe-connect-header__mobile-panel {
+    padding: 14px 0;
+}
+
+header.dfe-connect-header .dfe-connect-header__mobile-title {
+    margin-bottom: 8px;
+}
+
+header.dfe-connect-header .dfe-connect-header__mobile-service-name {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0 0 4px 0;
+    color: #0b0c0c;
+}
+
+header.dfe-connect-header .dfe-connect-header__mobile-org {
+    font-size: 16px;
+    line-height: 1.35;
+    color: #0b0c0c;
+    word-break: break-word;
+}
+
+header.dfe-connect-header .dfe-connect-header__menu-toggle {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.35;
+    font-weight: 700;
+    color: var(--dfe-blue);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+header.dfe-connect-header .dfe-connect-header__menu-caret {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid var(--dfe-blue);
+    transform: translateY(1px);
+}
+
+header.dfe-connect-header
+.dfe-connect-header__menu-toggle[aria-expanded="true"] .dfe-connect-header__menu-caret {
+    border-top: 0;
+    border-bottom: 7px solid var(--dfe-blue);
+    transform: translateY(-1px);
+}
+
+header.dfe-connect-header .dfe-connect-header__mobile-nav[hidden] {
+    display: none !important;
+}
+
+header.dfe-connect-header .dfe-connect-header__mobile-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header.dfe-connect-header .dfe-connect-header__mobile-nav-item {
+    border-top: 1px solid var(--dfe-border);
+    margin-bottom: 0 !important;
+}
+
+header.dfe-connect-header .dfe-connect-header__mobile-nav-link {
+    display: block;
+    padding: 12px 0;
+    color: var(--dfe-blue);
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 1.35;
+}
+
+header.dfe-connect-header .dfe-connect-header__mobile-nav-link:hover {
+    text-decoration: underline;
+}
+
+/* ------------------------------------------------------------
+   Responsive
+------------------------------------------------------------- */
+@media (max-width: 768px) {
+    /* Top band layout */
+    header.dfe-connect-header .dfe-connect-header__top-inner {
+        min-height: 56px;
+        padding: 8px 0;
+        gap: 8px;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__brand {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__dept-image {
+        height: 20px;
+        max-width: 160px;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__school {
+        display: none;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__account {
+        flex: 0 0 auto;
+        min-width: 0;
+        gap: 10px;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__search-toggle {
+        width: 36px;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__signout {
+        padding-left: 6px;
+        max-width: 70px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Search panel */
+    header.dfe-connect-header .dfe-connect-header__search-panel {
+        padding: 16px 0;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__search-form {
+        max-width: none;
+        width: 100%;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__search-submit {
+        flex: 0 0 44px;
+        width: 44px;
+        min-width: 44px;
+        padding: 0;
+    }
+
+    /* Service row */
+    header.dfe-connect-header .dfe-connect-header__service-row--desktop {
+        display: none;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__mobile {
+        display: block;
+    }
+}
+
+@media (max-width: 420px) {
+    header.dfe-connect-header .dfe-connect-header__dept-image {
+        height: 18px;
+        max-width: 140px;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__account {
+        gap: 8px;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__search-toggle {
+        width: 34px;
+    }
+
+    header.dfe-connect-header .dfe-connect-header__signout {
+        max-width: 64px;
+    }
+}
+
+header.dfe-connect-header .dfe-connect-header__nav-item .dfe-connect-header__nav-link {
+    margin: var(--govuk-spacing-responsive--3) 0 var(--govuk-spacing-responsive--2) 0 !important;
+    padding-bottom: 5px;
+    display: block;
+}
+
+header.dfe-connect-header .dfe-connect-header__nav-item--active .dfe-connect-header__nav-link {
+    padding-bottom: var(--govuk-spacing-responsive--2) !important;
+    margin-bottom: 0 !important;
+    border-bottom-width: var(--govuk-spacing-responsive--1);
+}
+
+header.dfe-connect-header .dfe-connect-header__service-row--desktop {
+    margin-bottom: -1px;
+}
+
+header.dfe-connect-header .dfe-connect-header__service-nav,
+header.dfe-connect-header .dfe-connect-header__nav-list {
+    gap: var(--govuk-spacing-responsive--6);
+}
+
+/* =========================================
+   Old footer feedback strip (A/B control)
+   ========================================= */
+
+.dfe-footer-feedback {
+    background: #f3f2f1;
+    border-top: 1px solid #b1b4b6;
+}
+
+.dfe-footer-feedback__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 12px 0;
+}
+
+.dfe-footer-feedback__heading {
+    margin: 0;
+    font-family: "GDS Transport", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.25;
+    color: #0b0c0c;
+}
+
+.dfe-footer-feedback__right .govuk-button {
+    margin: 0;
+}
+
+@media (max-width: 40.0625em) {
+    .dfe-footer-feedback__row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* =========================================
+   Page feedback strip (V2)
+   ========================================= */
+
+.dfe-page-feedback {
+    background: #f4f8fb;
+    border-top: 1px solid #b1b4b6;
+}
+
+.dfe-page-feedback__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 14px 0;
+}
+
+.dfe-page-feedback__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.dfe-page-feedback__question {
+    font-family: "GDS Transport", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.25;
+    color: #0b0c0c;
+}
+
+.dfe-page-feedback__choices {
+    display: inline-flex;
+    gap: 12px;
+}
+
+.dfe-page-feedback__choice {
+    font-family: "GDS Transport", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1;
+    padding: 9px 20px;
+    background: #F4F8FB;
+    color: #0b0c0c;
+    border: 2px solid #0b0c0c;
+    cursor: pointer;
+    box-shadow: 0 2px 0 #0b0c0c;
+}
+
+.dfe-page-feedback__choice:hover {
+    background: #f3f2f1;
+}
+
+.dfe-page-feedback__choice:focus {
+    outline: 3px solid #ffdd00;
+    outline-offset: 0;
+}
+
+.dfe-page-feedback__choice--selected {
+    background: #0b0c0c;
+    color: #F4F8FB;
+}
+
+.dfe-page-feedback__followup {
+    background: #F4F8FB;
+    padding: 14px 0;
+}
+
+.dfe-page-feedback__followup-panel {
+    padding-top: 16px;
+}
+
+.dfe-page-feedback__followup-heading {
+    margin: 0 0 8px;
+    font-family: "GDS Transport", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.25;
+    color: #0b0c0c;
+}
+
+.dfe-page-feedback__followup-body {
+    margin: 0 0 16px;
+    font-family: "GDS Transport", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #0b0c0c;
+    max-width: 720px;
+}
+
+.dfe-page-feedback__cancel {
+    margin-bottom: 0;
+}
+
+@media (max-width: 40.0625em) {
+    .dfe-page-feedback__row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.dfe-connect-banner {
+    width: 65%;
+    padding: 24px;
+    background-color: #f3f2f1;
+    border-left: 6px solid #1d70b8;
+    box-sizing: border-box;
+}
+
+@media (max-width: 40.0525em) {
+    .dfe-connect-banner {
+        width: 100%;
+    }
+}
+
+.dfe-task-list__group {
+    border-top: none !important;
+    margin-top: var(--govuk-spacing-responsive--4);
+}
+
+.govuk-task-list__item--with-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.govuk-task-list__name-and-hint {
+    flex: 1;
+    min-width: 0;
+}
+
+.govuk-task-list__status {
+    flex-shrink: 0;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.govuk-task-list {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.govuk-heading-m {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
 
 .govuk-header__link .govuk-header__logotype {
     height: 30px;
@@ -29,3 +925,8 @@ body {
     content: url(/images/department-for-education_black.png);
     height: 30px;
 }
+
+/*
+.govuk-width-container {
+    max-width: 1200px;
+}*/
