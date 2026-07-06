@@ -6,3 +6,9 @@
 );
 
 /* your custom styles here */
+
+.progress-bar {
+  background-color: govuk-colour("blue");
+  width: 100%;
+  padding: govuk-spacing(2);
+}
