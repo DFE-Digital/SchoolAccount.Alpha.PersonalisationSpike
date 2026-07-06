@@ -7,6 +7,10 @@ using SchoolAccount.Alpha.Services;
 using SchoolAccount.Alpha.Services.Config;
 
 var builder = WebApplication.CreateBuilder(args);
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSassCompiler();
+}
 
 builder.Services.AddAuthentication(options =>
 {
