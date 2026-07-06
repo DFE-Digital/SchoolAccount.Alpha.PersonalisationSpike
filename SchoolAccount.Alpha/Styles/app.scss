@@ -5,10 +5,9 @@
   $govuk-image-url-function: meta.get-function("versioned-image-url", $module: "govuk-frontend-aspnetcore")
 );
 
-/* your custom styles here */
+@use 'components/dfe-header';
+@use 'components/charts';
 
-.progress-bar {
-  background-color: govuk-colour("blue");
-  width: 100%;
-  padding: govuk-spacing(2);
+.govuk-width-container {
+    max-width: 1200px;
 }
