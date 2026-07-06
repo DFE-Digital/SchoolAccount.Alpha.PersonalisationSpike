@@ -364,3 +364,5 @@ FodyWeavers.xsd
 .github
 .idea
 appsettings.Production.json
+
+package_cache/
